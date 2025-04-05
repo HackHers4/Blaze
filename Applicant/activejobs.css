@@ -1,0 +1,89 @@
+.container {
+    display: flex;
+    flex-wrap: wrap; /*flex items will move to the next line if they do not fit within the available space.*/
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
+    gap: 40px; /* Space between items */
+
+        
+    /*Work Sans Font*/
+    font-family: "Work Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.column{
+    display: flex;
+    flex-direction: column; /* Arrange items in a column */
+
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    width: 30%; /* Full width of the container */
+
+    gap: 5px; /* Space between items */
+    padding: 20px; /* Padding around the column */
+
+    background-color: #f0f0f0; /* Light gray background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+
+    font-weight:400;
+    font-size:1rem;
+
+}
+
+.row{
+    display: flex;
+    flex-direction: row; /* Arrange items in a row */
+
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+
+    gap: 20px; /* Space between items */
+    width: 100%; /* Full width of the container */
+    padding: 20px; /* Padding around the row */
+
+    font-weight:400;
+    font-size:1rem;
+}
+
+.company-logo{
+    width: 70px; /* Set a fixed width for the logo */
+    height: auto; /* Maintain aspect ratio */
+
+    border-radius: 50%; /* Circular logo */
+}
+
+.btn{
+    padding: 3% 2% 3% 2%;
+    margin-top:10px;
+
+    background-color: #007bff; /* Bootstrap primary color */
+    color: #fff !important; /* White text */
+    border:none; /* No border */
+    border-radius: 20px; /* Rounded corners */
+    width:40%;
+
+    font-weight:400;
+    font-size:0.8rem;
+}
+
+.status-selected {
+    background-color: #28a745; /* Green */
+  }
+
+  .status-review {
+    background-color: #ffc107; /* Yellow */
+    color: black;
+  }
+
+  .status-declined {
+    background-color: #dc3545; /* Red */
+  }
+
+.view-more {
+    cursor: pointer;
+    color: #40a2d8;
+    text-decoration: underline;
+    margin-top: 5px;
+}

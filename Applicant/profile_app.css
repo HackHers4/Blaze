@@ -1,0 +1,83 @@
+
+.profile-card {
+    background: rgb(255, 255, 255);
+    padding: 30px;
+    border-radius: 16px;
+    width: 55%;
+    
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+
+}
+
+.profile-pic {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-pic img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+}
+
+.edit-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #ecebeb;
+    border-radius: 50%;
+    padding: 10px 10px 10px 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.field{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 10px;
+}
+
+.subrow {
+    width:400px;
+    padding: 10px 10px 10px 20px;
+    border: 1px solid #ecebeb;
+    border-radius: 8px;
+    background: #f9f9f9;
+    text-align:left;
+}
+
+.field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.field span {
+    font-size: 16px;
+}
+
+
+.field input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.hidden {
+    display: none;
+}
+
+.row{
+    display: flex;
+    justify-content: space-between;
+    gap:50px;
+}

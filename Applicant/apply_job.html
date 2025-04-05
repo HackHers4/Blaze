@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Job - SmartMatch</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="add_job.css">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="navigation">
+        <div class="leftnav">
+            <img src="logo_cmp.jpeg" alt="Logo" class="logo">
+        </div>
+        <div class="rightnav">
+            <p><a href= "index.html">Browse Jobs</a></p>
+            <p><a href= "activejobs.html">Active Jobs</a></p>
+            <p><a href= "profile.html">Profile</a></p>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <h2>Apply for a New Job</h2>
+        <form id="jobForm">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" required>
+
+            <label for="phno">Phone Number</label>
+            <input type = "text" id="phno" name="phno" required>
+
+            <label for="location">Location</label>
+            <input type = "text" id="location" name="location" required>
+
+            <label for="resume">Upload Resume</label>
+            <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <footer>
+        <h3>Copyright © 2024 UVEN - All Rights Reserved.</h3>
+        <i class="fa fa-linkedin-square" style="font-size:26px;color:white"></i>
+        <h3>Powered By HackHers</h3>
+    </footer>
+
+    <script>
+        document.getElementById("jobForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append("name", document.getElementById("name").value);
+            formData.append("phno", document.getElementById("phno").value);
+            formData.append("email", document.getElementById("email").value);
+            formData.append("resume", document.getElementById("resume").files[0]);
+
+            // Debug print to see values
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}:`, value);
+            }
+
+            // TODO: Send this formData to your FastAPI backend with fetch()
+            /*
+            fetch("http://localhost:8000/applicant", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Success:", data);
+                alert("Application submitted successfully!");
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Something went wrong.");
+            });
+            */
+        });
+    </script>
+</body>
+</html>

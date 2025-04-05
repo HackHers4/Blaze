@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartMatch</title>
-    <link rel="stylesheet" href="add_job.css">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .skill-entry {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
             gap: 10px;
+            padding: 8px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            cursor: grab;
+            user-select: none;
+        }
+        .skill-entry.dragging {
+            opacity: 0.5;
+            background: #e0e0e0;
         }
         .skill-rating {
             width: 150px;
@@ -35,28 +42,30 @@
             background: none;
             border: none;
             cursor: pointer;
+            margin-left: auto;
         }
         #skillEntryTemplate {
             display: none;
+        }
+        .priority-indicator {
+            width: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .skill-handle {
+            cursor: move;
+            padding: 0 8px;
+            color: #666;
         }
     </style>
 </head>
 <body>
 
-    <div class="navigation">
-        <div class="leftnav">
-            <img src="logo.png" alt="Logo" class="logo">
-        </div>
-        <div class="rightnav">
-            <p><a href="index.html">Browse Jobs</a></p>
-            <p><a href="activejobs.html">Active Jobs</a></p>
-            <p><a href="profile.html">Profile</a></p>
-        </div>
-    </div>
-
     <div class="form-container">
         <h2>Apply for a New Job</h2>
         <form id="jobForm">
+            <!-- Your existing form fields -->
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
 
@@ -70,17 +79,19 @@
             <input type="text" id="location" name="location" required>
 
             <div id="skillsSection">
-                <label>Skills</label>
+                <label>Skills (Drag to reorder by priority)</label>
                 <div class="skill-entry" id="skillEntryTemplate">
+                    <div class="skill-handle"><i class="fas fa-grip-vertical"></i></div>
+                    <div class="priority-indicator">1</div>
                     <input type="text" class="skill-name" placeholder="Skill name" required>
                     <input type="range" class="skill-rating" min="0" max="100" value="50" required>
                     <span class="skill-value">50</span>%
-                    <button type="button" class="remove-skill">Remove</button>
+                    <button type="button" class="remove-skill"><i class="fas fa-times"></i></button>
                 </div>
                 <div id="skillEntriesContainer">
                     <!-- Skill entries will be added here -->
                 </div>
-                <button type="button" id="addSkillBtn">Add Another Skill</button>
+                <button type="button" id="addSkillBtn"><i class="fas fa-plus"></i> Add Another Skill</button>
             </div>
 
             <label for="resume">Upload Resume</label>
@@ -90,18 +101,20 @@
         </form>
     </div>
 
-    <footer>
-        <h3>Copyright © 2024 UVEN - All Rights Reserved.</h3>
-        <i class="fa fa-linkedin-square" style="font-size:26px;color:white"></i>
-        <h3>Powered By HackHers</h3>
-    </footer>
-
     <script>
-        // Initialize skills functionality when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             const skillEntriesContainer = document.getElementById('skillEntriesContainer');
             const addSkillBtn = document.getElementById('addSkillBtn');
             const template = document.getElementById('skillEntryTemplate');
+            let draggedItem = null;
+            
+            // Function to update priority numbers
+            function updatePriorities() {
+                const entries = skillEntriesContainer.querySelectorAll('.skill-entry');
+                entries.forEach((entry, index) => {
+                    entry.querySelector('.priority-indicator').textContent = index + 1;
+                });
+            }
             
             // Function to add a new skill entry
             function addSkillEntry() {
@@ -121,9 +134,24 @@
                 // Remove this entry when button is clicked
                 removeBtn.addEventListener('click', function() {
                     newEntry.remove();
+                    updatePriorities();
+                });
+                
+                // Drag and drop functionality
+                newEntry.setAttribute('draggable', 'true');
+                
+                newEntry.addEventListener('dragstart', function(e) {
+                    draggedItem = this;
+                    setTimeout(() => this.classList.add('dragging'), 0);
+                });
+                
+                newEntry.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    draggedItem = null;
                 });
                 
                 skillEntriesContainer.appendChild(newEntry);
+                updatePriorities();
             }
             
             // Add first skill by default
@@ -131,61 +159,73 @@
             
             // Add new skill when button is clicked
             addSkillBtn.addEventListener('click', addSkillEntry);
-        });
-
-        // Form submission handler
-        document.getElementById("jobForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-
-            // Collect all skills
-            const skillEntries = document.getElementById('skillEntriesContainer').querySelectorAll('.skill-entry');
-            const skills = [];
             
-            skillEntries.forEach(entry => {
-                const name = entry.querySelector('.skill-name').value;
-                const rating = entry.querySelector('.skill-rating').value;
-                if (name) {  // Only add if skill name is not empty
-                    skills.push({ name, rating });
+            // Drag and drop handlers for container
+            skillEntriesContainer.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(this, e.clientY);
+                if (afterElement == null) {
+                    this.appendChild(draggedItem);
+                } else {
+                    this.insertBefore(draggedItem, afterElement);
                 }
             });
-
-            if (skills.length === 0) {
-                alert("Please add at least one skill");
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append("name", document.getElementById("name").value);
-            formData.append("phno", document.getElementById("phno").value);
-            formData.append("email", document.getElementById("email").value);
-            formData.append("location", document.getElementById("location").value);
-            formData.append("resume", document.getElementById("resume").files[0]);
-            formData.append("skills", JSON.stringify(skills));
-
-            // Debug print to see values
-            console.log("Form data:");
-            for (let [key, value] of formData.entries()) {
-                console.log(`${key}:`, value);
-            }
-
-            // Here you would typically send the data to your backend
-            alert("Form submitted successfully!\nSkills: " + JSON.stringify(skills));
             
-            /* Example fetch request:
-            fetch("http://your-backend-endpoint", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Success:", data);
-                alert("Application submitted successfully!");
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("Something went wrong.");
+            function getDragAfterElement(container, y) {
+                const draggableElements = [...container.querySelectorAll('.skill-entry:not(.dragging)')];
+                
+                return draggableElements.reduce((closest, child) => {
+                    const box = child.getBoundingClientRect();
+                    const offset = y - box.top - box.height / 2;
+                    
+                    if (offset < 0 && offset > closest.offset) {
+                        return { offset: offset, element: child };
+                    } else {
+                        return closest;
+                    }
+                }, { offset: Number.NEGATIVE_INFINITY }).element;
+            }
+            
+            // Form submission handler
+            document.getElementById("jobForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                
+                const skillEntries = skillEntriesContainer.querySelectorAll('.skill-entry');
+                const skills = [];
+                
+                skillEntries.forEach((entry, index) => {
+                    const name = entry.querySelector('.skill-name').value;
+                    const rating = entry.querySelector('.skill-rating').value;
+                    if (name) {
+                        skills.push({
+                            name,
+                            rating,
+                            priority: index + 1 // Higher priority means more important (1 = highest)
+                        });
+                    }
+                });
+                
+                if (skills.length === 0) {
+                    alert("Please add at least one skill");
+                    return;
+                }
+                
+                const formData = new FormData();
+                formData.append("name", document.getElementById("name").value);
+                formData.append("phno", document.getElementById("phno").value);
+                formData.append("email", document.getElementById("email").value);
+                formData.append("location", document.getElementById("location").value);
+                formData.append("resume", document.getElementById("resume").files[0]);
+                formData.append("skills", JSON.stringify(skills));
+                
+                console.log("Form data with priorities:");
+                for (let [key, value] of formData.entries()) {
+                    console.log(`${key}:`, value);
+                }
+                
+                alert("Form submitted!\nSkills in priority order:\n" + 
+                    skills.map(s => `${s.priority}. ${s.name} (${s.rating}%)`).join('\n'));
             });
-            */
         });
     </script>
 </body>

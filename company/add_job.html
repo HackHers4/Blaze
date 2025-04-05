@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Job - SmartMatch</title>
+    <link rel="stylesheet" href="index_cmp.css">
+    <link rel="stylesheet" href="add_job.css">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="navigation">
+        <div class="leftnav">
+            <img src="logo_cmp.jpeg" alt="Logo" class="logo">
+        </div>
+    </div>
+
+    <div class="form-container">
+        <h2>Add a New Job</h2>
+        <form id="jobForm">
+            <label for="role">Job Role</label>
+            <input type="text" id="role" name="role" required>
+
+            <label for="description">Job Description</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <label for="salary">Salary</label>
+            <input type="text" id="salary" name="salary" required>
+
+            <label for="skills">Skills Required</label>
+            <input type="text" id="skills" name="skills" placeholder="e.g. Python, SQL, Communication" required>
+
+            <label for="experience">Experience Required (in years)</label>
+            <input type="number" id="experience" name="experience" required>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <footer>
+        <h3>Copyright © 2024 UVEN - All Rights Reserved.</h3>
+        <i class="fa fa-linkedin-square" style="font-size:26px;color:white"></i>
+        <h3>Powered By HackHers</h3>
+    </footer>
+
+    <script>
+        document.getElementById("jobForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+    
+            const jobData = {
+                role: document.getElementById("role").value,
+                description: document.getElementById("description").value,
+                salary: document.getElementById("salary").value,
+                skills: document.getElementById("skills").value,
+                experience: document.getElementById("experience").value
+            };
+    
+            console.log("Submitted Job:", jobData);
+    
+            fetch("http://localhost:8000/job", { // Replace with your actual FastAPI endpoint
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(jobData)
+            })
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to submit job");
+                return response.json();
+            })
+            .then(data => {
+                console.log("Success:", data);
+                // ✅ Redirect to another page after successful submission
+                window.location.href = "comp_home.html"; // change to your target page
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Failed to submit job. Please try again.");
+            });
+        });
+    </script>
+    
+</body>
+</html>

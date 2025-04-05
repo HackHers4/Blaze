@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="identifier">Email or Phone Number</label>
+        <input type="text" id="identifier" name="identifier" required />
+      </div>
+
+      <div class="forgot-password-container">
+        <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
+      </div>
+      
+      <button type="submit" class="submit-btn">Login</button>
+
+      <div class="divider">OR</div>
+
+      <button type="button" class="google-btn">
+        <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="Google Logo" class="google-logo" />
+        Continue with Google
+      </button>      
+    </form>
+  </div>
+</body>
+</html>

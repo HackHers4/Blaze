@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Role</title>
+  <link rel="stylesheet" href="signUp.css"/>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>Sign Up</h2>
+
+    <div class="role-toggle">
+      <button id="applicantBtn" class="active">Applicant</button>
+      <button id="companyBtn">Company</button>
+    </div>
+
+    <form id="roleForm">
+      <input type="hidden" id="roleInput" name="role" value="applicant" />
+      <button type="submit" class="submit-btn">Next</button>
+    </form>
+  </div>
+
+  <script>
+    const applicantBtn = document.getElementById('applicantBtn');
+    const companyBtn = document.getElementById('companyBtn');
+    const roleInput = document.getElementById('roleInput');
+
+    applicantBtn.addEventListener('click', () => {
+      roleInput.value = 'applicant';
+      applicantBtn.classList.add('active');
+      companyBtn.classList.remove('active');
+    });
+
+    companyBtn.addEventListener('click', () => {
+      roleInput.value = 'company';
+      companyBtn.classList.add('active');
+      applicantBtn.classList.remove('active');
+    });
+
+    document.getElementById('roleForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const role = roleInput.value;
+      window.location.href = `info.html?role=${role}`;
+    });
+  </script>
+</body>
+</html>

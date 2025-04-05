@@ -1,0 +1,100 @@
+/* Global styles */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f8fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Container */
+.signup-container {
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  
+  justify-content: center !important;
+  align-content: center;
+}
+
+/* Heading */
+.signup-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1a73e8;
+}
+
+/* Role toggle buttons */
+.role-toggle {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.role-toggle button {
+  flex: 1;
+  padding: 10px;
+  margin: 0 5px;
+  border: 2px solid #1a73e8;
+  background-color: white;
+  color: #1a73e8;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.role-toggle button.active {
+  background-color: #1a73e8;
+  color: white;
+}
+
+/* Form group */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: border 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #1a73e8;
+  outline: none;
+}
+
+/* Submit button */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #1a73e8;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #1558b0;
+}

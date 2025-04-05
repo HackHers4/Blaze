@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>SmartMatch</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="profile_cmp.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    <div class="navigation">
+        <div class="leftnav">
+            <img src="logo_cmp.jpeg" alt="Logo" class="logo">
+        </div>
+        <div class="rightnav">
+            <p><a href="index.html">Browse Jobs</a></p>
+            <p><a href="profile_cmp.html">Profile</a></p>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; padding: 40px 0;">
+        <div class="profile-card">
+
+            <div class="profile-pic">
+                <img id="profileImg" src="profile_icon.jpg" alt="Profile Picture">
+                <label for="profileUpload" class="edit-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
+                        <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                    </svg>
+                </label>
+                <input type="file" id="profileUpload" accept="image/*">
+            </div>
+
+            <div class="field">
+                <label>Company Name:</label>
+                <div class="row">
+                    <span class="subrow" id="nameText">Google</span>
+                    <span class="edit-text-icon" onclick="editField('name')">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
+                            <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                        </svg>
+                    </span>
+                    <input type="text" id="CompanynameInput" class="hidden" value="Google" onblur="saveField('CompanyName')">
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Email-Id:</label>
+                <div class="row">
+                    <span class="subrow" id="emailText">google@gmail.com</span>
+                    <span class="edit-text-icon" onclick="editField('email')">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
+                            <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                        </svg>
+                    </span>
+                    <input type="email" id="emailInput" class="hidden" value="google@gmail.com" onblur="saveField('email')">
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Location:</label>
+                <div class="row">
+                    <span class="subrow" id="locationText">New York, USA</span>
+                    <span class="edit-text-icon" onclick="editField('location')">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
+                            <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                        </svg>
+                    </span>
+                    <input type="text" id="locationInput" class="hidden" value="New York, USA" onblur="saveField('location')">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <h3>Copyright © 2024 UVEN - All Rights Reserved.</h3>
+        <i class="fa fa-linkedin-square" style="font-size:26px;color:white"></i>
+        <h3>Powered By HackHers</h3>
+    </footer>
+
+    <script src="profile_cmp.js"></script>
+</body>
+</html>

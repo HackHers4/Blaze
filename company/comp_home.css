@@ -50,12 +50,10 @@
 .btn {
     padding: 3% 2%;
     margin-top: 10px;
-
-    background-color: #007bff;
-    color: #fff;
+    
+    color: black;
     border: none;
     border-radius: 20px;
-    width: 220px;
 
     font-weight: 400;
     font-size: 0.8rem;

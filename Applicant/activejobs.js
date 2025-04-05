@@ -1,5 +1,5 @@
 // Simulate getting status from backend
-  let status = "selected"; // Change this to "Selected" or "Declined" to test
+  let status = "In Review"; // Change this to "Selected" or "Declined" to test
 
   const button = document.getElementById("statusButton");
 

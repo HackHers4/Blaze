@@ -58,6 +58,19 @@
             padding: 0 8px;
             color: #666;
         }
+        .priority-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .priority-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-size: 10px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -79,10 +92,14 @@
             <input type="text" id="location" name="location" required>
 
             <div id="skillsSection">
-                <label>Skills (Drag to reorder by priority)</label>
+                <label>Skills (Drag to reorder - Top = Highest Priority)</label>
                 <div class="skill-entry" id="skillEntryTemplate">
                     <div class="skill-handle"><i class="fas fa-grip-vertical"></i></div>
                     <div class="priority-indicator">1</div>
+                    <div class="priority-controls">
+                        <button type="button" class="priority-btn up-btn"><i class="fas fa-caret-up"></i></button>
+                        <button type="button" class="priority-btn down-btn"><i class="fas fa-caret-down"></i></button>
+                    </div>
                     <input type="text" class="skill-name" placeholder="Skill name" required>
                     <input type="range" class="skill-rating" min="0" max="100" value="50" required>
                     <span class="skill-value">50</span>%
@@ -108,12 +125,26 @@
             const template = document.getElementById('skillEntryTemplate');
             let draggedItem = null;
             
-            // Function to update priority numbers
+            // Function to update priority numbers based on current position
             function updatePriorities() {
                 const entries = skillEntriesContainer.querySelectorAll('.skill-entry');
                 entries.forEach((entry, index) => {
-                    entry.querySelector('.priority-indicator').textContent = index + 1;
+                    const priorityIndicator = entry.querySelector('.priority-indicator');
+                    priorityIndicator.textContent = index + 1;
+                    
+                    // Update the priority value stored in the entry
+                    entry.dataset.priority = index + 1;
                 });
+            }
+            
+            // Function to move a skill up or down
+            function moveSkill(entry, direction) {
+                if (direction === 'up' && entry.previousElementSibling) {
+                    skillEntriesContainer.insertBefore(entry, entry.previousElementSibling);
+                } else if (direction === 'down' && entry.nextElementSibling) {
+                    skillEntriesContainer.insertBefore(entry.nextElementSibling, entry);
+                }
+                updatePriorities();
             }
             
             // Function to add a new skill entry
@@ -125,6 +156,8 @@
                 const ratingInput = newEntry.querySelector('.skill-rating');
                 const valueDisplay = newEntry.querySelector('.skill-value');
                 const removeBtn = newEntry.querySelector('.remove-skill');
+                const upBtn = newEntry.querySelector('.up-btn');
+                const downBtn = newEntry.querySelector('.down-btn');
                 
                 // Update value display when slider changes
                 ratingInput.addEventListener('input', function() {
@@ -137,6 +170,10 @@
                     updatePriorities();
                 });
                 
+                // Priority up/down buttons
+                upBtn.addEventListener('click', () => moveSkill(newEntry, 'up'));
+                downBtn.addEventListener('click', () => moveSkill(newEntry, 'down'));
+                
                 // Drag and drop functionality
                 newEntry.setAttribute('draggable', 'true');
                 
@@ -148,6 +185,7 @@
                 newEntry.addEventListener('dragend', function() {
                     this.classList.remove('dragging');
                     draggedItem = null;
+                    updatePriorities(); // Update priorities after drop
                 });
                 
                 skillEntriesContainer.appendChild(newEntry);
@@ -169,6 +207,10 @@
                 } else {
                     this.insertBefore(draggedItem, afterElement);
                 }
+            });
+            
+            skillEntriesContainer.addEventListener('dragend', function() {
+                updatePriorities(); // Ensure priorities are updated after drop
             });
             
             function getDragAfterElement(container, y) {
@@ -193,14 +235,16 @@
                 const skillEntries = skillEntriesContainer.querySelectorAll('.skill-entry');
                 const skills = [];
                 
-                skillEntries.forEach((entry, index) => {
+                skillEntries.forEach((entry) => {
                     const name = entry.querySelector('.skill-name').value;
                     const rating = entry.querySelector('.skill-rating').value;
+                    const priority = entry.dataset.priority || (Array.from(skillEntries).indexOf(entry) + 1);
+                    
                     if (name) {
                         skills.push({
                             name,
                             rating,
-                            priority: index + 1 // Higher priority means more important (1 = highest)
+                            priority: parseInt(priority) // Convert to number
                         });
                     }
                 });
@@ -210,6 +254,9 @@
                     return;
                 }
                 
+                // Sort skills by priority (ascending - 1 is highest priority)
+                skills.sort((a, b) => a.priority - b.priority);
+                
                 const formData = new FormData();
                 formData.append("name", document.getElementById("name").value);
                 formData.append("phno", document.getElementById("phno").value);
@@ -218,7 +265,8 @@
                 formData.append("resume", document.getElementById("resume").files[0]);
                 formData.append("skills", JSON.stringify(skills));
                 
-                console.log("Form data with priorities:");
+                console.log("Form data with dynamic priorities:");
+                console.log("Skills in priority order:", skills);
                 for (let [key, value] of formData.entries()) {
                     console.log(`${key}:`, value);
                 }

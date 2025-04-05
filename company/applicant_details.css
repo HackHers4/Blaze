@@ -1,0 +1,94 @@
+body {
+    font-family: 'Work Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f8fa;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #1f2937;
+    color: white;
+}
+
+.leftnav .logo {
+    height: 40px;
+}
+
+.rightnav p {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.rightnav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.details-container {
+    padding: 40px;
+}
+
+.details-container h2 {
+    font-size: 28px;
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+.profile-section {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.profile-pic {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+}
+
+.skills-section {
+    flex: 1;
+}
+
+.skills-section h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.skills-section ul {
+    list-style-type: disc;
+    margin-left: 25px;
+    margin-bottom: 25px;
+}
+
+.skills-section li {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.download-btn {
+    padding: 10px 20px;
+    background-color: #3b82f6;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.download-btn:hover {
+    background-color: #2563eb;
+}

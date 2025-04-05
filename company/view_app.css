@@ -1,0 +1,142 @@
+body {
+    font-family: 'Work Sans', sans-serif;
+    background-color: #f4f7fa;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navigation {
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+  }
+  
+  .leftnav .logo {
+    height: 40px;
+  }
+  
+  .rightnav {
+    display: flex;
+    gap: 25px;
+  }
+  
+  .rightnav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  
+  h2 {
+    color: #003366;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .applicant-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .applicant-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border-left: 6px solid transparent;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    transition: transform 0.2s ease;
+  }
+  
+  .applicant-card:hover {
+    transform: scale(1.01);
+  }
+  
+  .good-fit {
+    border-left-color: #28a745;
+  }
+  
+  .maybe-fit {
+    border-left-color: #ffc107;
+  }
+  
+  .not-fit {
+    border-left-color: #dc3545;
+  }
+  
+  .applicant-card .info {
+    flex: 1;
+  }
+  
+  .applicant-card .info h3 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .applicant-card .info p {
+    margin: 4px 0;
+    color: #555;
+  }
+  
+  .applicant-card .action {
+    margin-left: 20px;
+  }
+  
+  .details-btn {
+    padding: 10px 16px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .details-btn:hover {
+    background-color: #0059b3;
+  }
+  
+  /* Filters (if any added later) */
+  .filters {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+    align-items: center;
+  }
+  
+  .filters label {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .filters select,
+  .filters input[type="range"] {
+    padding: 6px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 60px;
+    font-size: 14px;
+  }
+  

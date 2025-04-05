@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Applicants Overview - SmartMatch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- External stylesheets -->
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="view_app.css" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="navigation">
+    <div class="leftnav">
+      <img src="logo_cmp.jpeg" alt="Logo" class="logo" />
+    </div>
+    <div class="rightnav">
+      <p><a href="index.html">View Added Jobs</a></p>
+      <p><a href="profile_cmp.html">Profile</a></p>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Applicant Overview</h2>
+
+    <!-- Filter Section -->
+    <div class="filter-bar">
+      <label>Filter by Fit:</label>
+      <label><input type="checkbox" name="fit" value="good-fit" checked /> Good Fit</label>
+      <label><input type="checkbox" name="fit" value="maybe-fit" checked /> Maybe Fit</label>
+      <label><input type="checkbox" name="fit" value="not-fit" checked /> Not Fit</label>
+
+      <label for="sortScore">Sort by Score:</label>
+      <select id="sortScore">
+        <option value="desc">High to Low</option>
+        <option value="asc">Low to High</option>
+      </select>
+
+      <label for="minScore">Min Score:</label>
+      <input type="number" id="minScore" value="0" min="0" max="100" />
+
+      <label for="maxScore">Max Score:</label>
+      <input type="number" id="maxScore" value="100" min="0" max="100" />
+
+      <button onclick="applyFilters()">Apply</button>
+    </div>
+
+    <!-- Applicant Cards -->
+    <div class="applicant-list" id="applicantList">
+      <div class="applicant-card good-fit">
+        <div class="info">
+          <h3>Derek Shepard</h3>
+          <p><strong>Fit:</strong> Good Fit</p>
+          <p><strong>Match Score:</strong> 97%</p>
+        </div>
+        <div class="action">
+            <a class="details-btn" href="applicant_details.html?name=Derek Shepard">View Details</a>
+        </div>
+      </div>
+      <div class="applicant-card good-fit">
+        <div class="info">
+          <h3>Meredith Grey</h3>
+          <p><strong>Fit:</strong> Good Fit</p>
+          <p><strong>Match Score:</strong> 95%</p>
+        </div>
+        <div class="action">
+            <a class="details-btn" href="applicant_details.html?name=Meredith Grey">View Details</a>
+        </div>
+      </div>
+      <div class="applicant-card good-fit">
+        <div class="info">
+          <h3>Christina Yang</h3>
+          <p><strong>Fit:</strong> Good Fit</p>
+          <p><strong>Match Score:</strong> 92%</p>
+        </div>
+        <div class="action">
+            <a class="details-btn" href="applicant_details.html?name=Christina Yang">View Details</a>
+        </div>
+      </div>
+
+      <div class="applicant-card maybe-fit">
+        <div class="info">
+          <h3>Addison Montgomery</h3>
+          <p><strong>Fit:</strong> Maybe Fit</p>
+          <p><strong>Match Score:</strong> 60%</p>
+        </div>
+        <div class="action">
+            <a class="details-btn" href="applicant_details.html?name=Addison Montgomery">View Details</a>
+        </div>
+      </div>
+      <div class="applicant-card maybe-fit">
+        <div class="info">
+          <h3>Callie Torres</h3>
+          <p><strong>Fit:</strong> Maybe Fit</p>
+          <p><strong>Match Score:</strong> 69%</p>
+        </div>
+        <div class="action">
+            <a class="details-btn" href="applicant_details.html?name=Callie Torres">View Details</a>
+        </div>
+      </div>
+      <div class="applicant-card maybe-fit">
+        <div class="info">
+          <h3>Owen Hunt</h3>
+          <p><strong>Fit:</strong> Maybe Fit</p>
+          <p><strong>Match Score:</strong> 67%</p>
+        </div>
+        <div class="action">
+            <a class="details-btn" href="applicant_details.html?name=Owen Hunt">View Details</a>
+        </div>
+      </div>
+
+      <div class="applicant-card not-fit">
+        <div class="info">
+          <h3>Mark Sloan</h3>
+          <p><strong>Fit:</strong> Not Fit</p>
+          <p><strong>Match Score:</strong> 42%</p>
+        </div>
+        <div class="action">
+            <a class="details-btn" href="applicant_details.html?name=Mark Sloan">View Details</a>
+        </div>
+      </div>
+      <div class="applicant-card not-fit">
+        <div class="info">
+          <h3>Maggie Pierce</h3>
+          <p><strong>Fit:</strong> Not Fit</p>
+          <p><strong>Match Score:</strong> 30%</p>
+        </div>
+        <div class="action">
+            <a class="details-btn" href="applicant_details.html?name=Maggie Pierce">View Details</a>
+        </div>
+      </div>
+      <div class="applicant-card not-fit">
+        <div class="info">
+          <h3>Dolores Umbridge</h3>
+          <p><strong>Fit:</strong> Not Fit</p>
+          <p><strong>Match Score:</strong> 1%</p>
+        </div>
+        <div class="action">
+            <a class="details-btn" href="applicant_details.html?name=Dolores Umbridge">View Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <h3>Copyright © 2024 UVEN - All Rights Reserved.</h3>
+    <h3>Powered By HackHers</h3>
+  </footer>
+
+  <script>
+    function applyFilters() {
+      const selectedFits = Array.from(document.querySelectorAll('input[name="fit"]:checked')).map(cb => cb.value);
+      const sortOrder = document.getElementById('sortScore').value;
+      const minScore = parseInt(document.getElementById('minScore').value) || 0;
+      const maxScore = parseInt(document.getElementById('maxScore').value) || 100;
+
+      const applicants = Array.from(document.querySelectorAll('.applicant-card'));
+      const listContainer = document.getElementById('applicantList');
+
+      applicants.forEach(applicant => {
+        const fitClass = ['good-fit', 'maybe-fit', 'not-fit'].find(fit => applicant.classList.contains(fit));
+        const scoreText = applicant.querySelector('p:nth-child(3)').innerText;
+        const score = parseInt(scoreText.replace('%', '').split(':')[1].trim());
+
+        const fitMatch = selectedFits.includes(fitClass);
+        const scoreMatch = score >= minScore && score <= maxScore;
+
+        applicant.style.display = (fitMatch && scoreMatch) ? 'block' : 'none';
+      });
+
+      const visibleApplicants = applicants.filter(app => app.style.display === 'block');
+      visibleApplicants.sort((a, b) => {
+        const scoreA = parseInt(a.querySelector('p:nth-child(3)').innerText.replace('%', '').split(':')[1].trim());
+        const scoreB = parseInt(b.querySelector('p:nth-child(3)').innerText.replace('%', '').split(':')[1].trim());
+
+        return sortOrder === 'asc' ? scoreA - scoreB : scoreB - scoreA;
+      });
+
+      visibleApplicants.forEach(app => listContainer.appendChild(app));
+    }
+  </script>
+</body>
+</html>

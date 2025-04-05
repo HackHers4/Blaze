@@ -14,7 +14,7 @@
     padding-left:5%;
     margin-bottom: 30px;
 
-    background-color: #0c71ed;
+    background: linear-gradient(rgb(0, 174, 255) rgb(88, 208, 255) rgb(0, 225, 255));
     color: rgb(255, 255, 255);
     
     font-size:1.1rem;

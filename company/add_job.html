@@ -3,39 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Job - SmartMatch</title>
-    <link rel="stylesheet" href="index_cmp.css">
+    <title>SmartMatch</title>
     <link rel="stylesheet" href="add_job.css">
+    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .skill-entry {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 10px;
+        }
+        .skill-rating {
+            width: 150px;
+        }
+        .skill-value {
+            width: 30px;
+            text-align: right;
+        }
+        #addSkillBtn {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .remove-skill {
+            color: red;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        #skillEntryTemplate {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
     <div class="navigation">
         <div class="leftnav">
-            <img src="logo_cmp.jpeg" alt="Logo" class="logo">
+            <img src="logo.png" alt="Logo" class="logo">
         </div>
         <div class="rightnav">
-            <p><a href= "index.html">Home</a></p>
+            <p><a href="index.html">Browse Jobs</a></p>
+            <p><a href="activejobs.html">Active Jobs</a></p>
+            <p><a href="profile.html">Profile</a></p>
         </div>
     </div>
 
     <div class="form-container">
-        <h2>Add a New Job</h2>
+        <h2>Apply for a New Job</h2>
         <form id="jobForm">
-            <label for="role">Job Role</label>
-            <input type="text" id="role" name="role" required>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
 
-            <label for="description">Job Description</label>
-            <textarea id="description" name="description" rows="4" required></textarea>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
 
-            <label for="salary">Salary</label>
-            <input type="text" id="salary" name="salary" required>
+            <label for="phno">Phone Number</label>
+            <input type="tel" id="phno" name="phno" required>
 
-            <label for="skills">Skills Required</label>
-            <input type="text" id="skills" name="skills" placeholder="e.g. Python, SQL, Communication" required>
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" required>
 
-            <label for="experience">Experience Required (in years)</label>
-            <input type="number" id="experience" name="experience" required>
+            <div id="skillsSection">
+                <label>Skills</label>
+                <div class="skill-entry" id="skillEntryTemplate">
+                    <input type="text" class="skill-name" placeholder="Skill name" required>
+                    <input type="range" class="skill-rating" min="0" max="100" value="50" required>
+                    <span class="skill-value">50</span>%
+                    <button type="button" class="remove-skill">Remove</button>
+                </div>
+                <div id="skillEntriesContainer">
+                    <!-- Skill entries will be added here -->
+                </div>
+                <button type="button" id="addSkillBtn">Add Another Skill</button>
+            </div>
+
+            <label for="resume">Upload Resume</label>
+            <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
 
             <button type="submit" class="submit-btn">Submit</button>
         </form>
@@ -48,41 +97,96 @@
     </footer>
 
     <script>
-        document.getElementById("jobForm").addEventListener("submit", function (e) {
+        // Initialize skills functionality when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillEntriesContainer = document.getElementById('skillEntriesContainer');
+            const addSkillBtn = document.getElementById('addSkillBtn');
+            const template = document.getElementById('skillEntryTemplate');
+            
+            // Function to add a new skill entry
+            function addSkillEntry() {
+                const newEntry = template.cloneNode(true);
+                newEntry.style.display = 'flex';
+                newEntry.removeAttribute('id');
+                
+                const ratingInput = newEntry.querySelector('.skill-rating');
+                const valueDisplay = newEntry.querySelector('.skill-value');
+                const removeBtn = newEntry.querySelector('.remove-skill');
+                
+                // Update value display when slider changes
+                ratingInput.addEventListener('input', function() {
+                    valueDisplay.textContent = this.value;
+                });
+                
+                // Remove this entry when button is clicked
+                removeBtn.addEventListener('click', function() {
+                    newEntry.remove();
+                });
+                
+                skillEntriesContainer.appendChild(newEntry);
+            }
+            
+            // Add first skill by default
+            addSkillEntry();
+            
+            // Add new skill when button is clicked
+            addSkillBtn.addEventListener('click', addSkillEntry);
+        });
+
+        // Form submission handler
+        document.getElementById("jobForm").addEventListener("submit", function(e) {
             e.preventDefault();
-    
-            const jobData = {
-                role: document.getElementById("role").value,
-                description: document.getElementById("description").value,
-                salary: document.getElementById("salary").value,
-                skills: document.getElementById("skills").value,
-                experience: document.getElementById("experience").value
-            };
-    
-            console.log("Submitted Job:", jobData);
-    
-            fetch("http://localhost:8000/job", { // Replace with your actual FastAPI endpoint
+
+            // Collect all skills
+            const skillEntries = document.getElementById('skillEntriesContainer').querySelectorAll('.skill-entry');
+            const skills = [];
+            
+            skillEntries.forEach(entry => {
+                const name = entry.querySelector('.skill-name').value;
+                const rating = entry.querySelector('.skill-rating').value;
+                if (name) {  // Only add if skill name is not empty
+                    skills.push({ name, rating });
+                }
+            });
+
+            if (skills.length === 0) {
+                alert("Please add at least one skill");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("name", document.getElementById("name").value);
+            formData.append("phno", document.getElementById("phno").value);
+            formData.append("email", document.getElementById("email").value);
+            formData.append("location", document.getElementById("location").value);
+            formData.append("resume", document.getElementById("resume").files[0]);
+            formData.append("skills", JSON.stringify(skills));
+
+            // Debug print to see values
+            console.log("Form data:");
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}:`, value);
+            }
+
+            // Here you would typically send the data to your backend
+            alert("Form submitted successfully!\nSkills: " + JSON.stringify(skills));
+            
+            /* Example fetch request:
+            fetch("http://your-backend-endpoint", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(jobData)
+                body: formData
             })
-            .then(response => {
-                if (!response.ok) throw new Error("Failed to submit job");
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 console.log("Success:", data);
-                // ✅ Redirect to another page after successful submission
-                window.location.href = "comp_home.html"; // change to your target page
+                alert("Application submitted successfully!");
             })
             .catch(error => {
                 console.error("Error:", error);
-                alert("Failed to submit job. Please try again.");
+                alert("Something went wrong.");
             });
+            */
         });
     </script>
-    
 </body>
 </html>
